@@ -23,7 +23,7 @@ const runCommand = (operator, value) => {
       searchMovies(value)
       break
     case "do-what-it-says":
-      runTxtFile(value)
+      runTxtFile()
       break
     default:
       console.log((`ERROR -- ${operator} is not a valid command\nChoose from:
@@ -39,19 +39,19 @@ const runCommand = (operator, value) => {
 const runTxtFile = () => {
   fs.readFile('./random.txt', 'utf8', (err, data) => {
     if (err){
-      return console.log(err);
+      return console.log(err)
     } 
-    const elements = data.split(",");
-    const command = elements[0];
-    const title = elements[1].replace(/ /g,'+');
-      console.log(`Command: ${command}`);
-      console.log(`String: ${title}`);
+    const elements = data.split(",")
+    const operator = elements[0]
+    const value = elements[1].replace(/ /g,'+')
+    runCommand(operator, value)
   })
 }
 
-// runTxtFile();
-
-// ========================= SPOTIFY THIS ==============================
+/**
+ * Searches Spotify for the specified title
+ * @param {*} title 
+ */
 function searchSpotify(title = "The Sign Ace of Base") {
   var spotify = new Spotify(keys.spotify)
   spotify.search({
@@ -61,13 +61,16 @@ function searchSpotify(title = "The Sign Ace of Base") {
   if (err) {
     return console.log('Error: ' + err);
   }
-  // console.log(JSON.stringify(data, null, 3)); // This shows the ENTIRE object nicely! The last number is an indentation factor
-  displaySpotifyInfo(data.tracks)
+  console.log(JSON.stringify(data.tracks.items, null, 3)); // This shows the ENTIRE object nicely! The last number is an indentation factor
+  const items = data.tracks.items;
+  items.forEach(item => {
+    displaySpotifyInfo(item)
+  });
 })
 }
 
-const displaySpotifyInfo = (data) => {
-  var track = data.items[0];
+const displaySpotifyInfo = (track) => {
+  // var track = data.items[0];
   // console.log(track);
   console.log(`Song: ${track.name}`);
   console.log("Artist(s): ");
