@@ -38,7 +38,7 @@ Searches the Spotify API for the song of your choice. It will display the follow
   
   If no song is entered, the information for the song "The Sign" by Ace of Base is displayed.
   
-    Sample spotify-this-song:
+  Sample spotify-this-song:
 ```
 node liri.js spotify-this-song Talking in your Sleep
 ```
@@ -56,7 +56,8 @@ Searches the OMDB API for the movie of your choice. It will display the followin
    * Actors in the movie.
    
 If no movie is entered, the information for the movie "Mr. Nobody" is displayed.
-  Sample movie-this:
+
+Sample movie-this:
 ```
 node liri.js movie-this 2001 A Space Odyssey
 ```
