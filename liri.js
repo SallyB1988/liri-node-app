@@ -78,9 +78,9 @@ function searchSpotify(title) {
   if (err) {
     return console.log('Error: ' + err);
   }
-  logAndSave(`\n\n`);
-  logAndSave(`Information for ${titleWithSpaces.toUpperCase()}`);
-  logAndSave(`====================================`);
+  logAndSave(`\r\n\r\n`);
+  logAndSave(`Information for ${titleWithSpaces.toUpperCase()}\r\n`);
+  logAndSave(`====================================\r\n`);
   const items = data.tracks.items;
   items.forEach(item => {
     if (item.name.toLowerCase() === titleWithSpaces.toLowerCase()) {
@@ -96,7 +96,7 @@ const displaySpotifyInfo = (track) => {
   logAndSave("Artist(s): ");
   displayArtists(track.artists);
   logAndSave(`Spotify preview link: ${track.external_urls.spotify}`);
-  logAndSave(`Album:  ${track.album.name}\n`)
+  logAndSave(`Album:  ${track.album.name}\r\n`)
 }
 
 const displayArtists = (arr) => {
@@ -111,15 +111,15 @@ const displayArtists = (arr) => {
 const searchConcerts = (artist) => {
   axios.get(`https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`)
   .then(function(resp) {
-    logAndSave(`\n\n`);
+    logAndSave(`\r\n\r\n`);
     logAndSave(`Concerts for ${artist.replace('+',' ').toUpperCase()}`);
     logAndSave(`====================================`);
     resp.data.forEach((event) => {
       var date = moment(event.datetime).format("MM/DD/YY")
-      logAndSave(`\n\tDate: ${date}`);
+      logAndSave(`\r\n\tDate: ${date}`);
 
       logAndSave(`\t\tVenue: ${event.venue.name}`)
-      logAndSave(`\t\tLocation: ${event.venue.city}, ${event.venue.region}`)
+      logAndSave(`\t\tLocation: ${event.venue.city}, ${event.venue.region}\r\n`)
     })
   })
   .catch(function (error) {
@@ -135,9 +135,9 @@ const searchMovies = (title) => {
   axios.get(`http://www.omdbapi.com/?t=${title}&apikey=trilogy`)
   .then((resp) => {
     // console.log(JSON.stringify(resp.data, null, 2));
-    logAndSave(`\n\n`);
-    logAndSave(`Information for ${title.replace(/\+/g,' ').toUpperCase()}`);
-    logAndSave(`====================================`);
+    logAndSave(`\r\n\r\n`);
+    logAndSave(`Information for ${title.replace(/\+/g,' ').toUpperCase()}\r\n`);
+    logAndSave(`====================================\r\n`);
     var data = resp.data;
     if (data.Title === undefined) {
       return logAndSave("No Movie data found");
@@ -150,14 +150,15 @@ const searchMovies = (title) => {
 
 // Display movie information in an organized way
 const displayMovieInfo = (data) => {
+  var rottenRating = getRottenTomatoes(data.Ratings);
   logAndSave(`Title:  ${data.Title}`);
   logAndSave(`\tYear:  ${data.Year}`);
   logAndSave(`\tIMDB Rating: ${data.imdbRating}`)
-  logAndSave(`\tRotten Tomatoes Rating: ${getRottenTomatoes(data.Ratings)}`)
+  logAndSave(`\tRotten Tomatoes Rating: ${rottenRating}`)
   logAndSave(`\tCountry Where Produced: ${data.Country}`)
   logAndSave(`\tLanguage: ${data.Language}`)
   logAndSave(`\tPlot: ${data.Plot}`)
-  logAndSave(`\tActors: ${data.Actors}`)
+  logAndSave(`\tActors: ${data.Actors}\r\n`)
 }
 const getRottenTomatoes = (ratings) => {
   // let obj = ratings.find((rating) => {
