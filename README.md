@@ -77,6 +77,6 @@ concert-this, Reba McEntire
 
 # Video Showing Working Liri app
 
-[Demo Video](https://github.com/SallyB1988/liri-node-app/blob/master/ProjectVideo.webm)
+[concert-this Demo Video](https://github.com/SallyB1988/liri-node-app/blob/master/concert-this.webm)
 
 
