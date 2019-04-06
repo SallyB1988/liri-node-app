@@ -66,7 +66,10 @@ const runTxtFile = () => {
  * Searches Spotify for the specified title
  * @param {*} title 
  */
-function searchSpotify(title = "The Sign Ace of Base") {
+function searchSpotify(title) {
+  
+  if (title === '') {title = "The Sign"}
+  const titleWithSpaces = title.replace(/\+/g,' ');
   var spotify = new Spotify(keys.spotify)
   spotify.search({
   type: 'track',
@@ -76,11 +79,14 @@ function searchSpotify(title = "The Sign Ace of Base") {
     return console.log('Error: ' + err);
   }
   logAndSave(`\n\n`);
-  logAndSave(`Information for ${title.replace(/\+/g,' ').toUpperCase()}`);
+  logAndSave(`Information for ${titleWithSpaces.toUpperCase()}`);
   logAndSave(`====================================`);
   const items = data.tracks.items;
   items.forEach(item => {
-    displaySpotifyInfo(item)
+    if (item.name.toLowerCase() === titleWithSpaces.toLowerCase()) {
+
+      displaySpotifyInfo(item)
+    }
   });
 })
 }
@@ -90,7 +96,7 @@ const displaySpotifyInfo = (track) => {
   logAndSave("Artist(s): ");
   displayArtists(track.artists);
   logAndSave(`Spotify preview link: ${track.external_urls.spotify}`);
-  logAndSave(`Album:  ${track.album.name}`)
+  logAndSave(`Album:  ${track.album.name}\n`)
 }
 
 const displayArtists = (arr) => {
