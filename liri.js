@@ -22,7 +22,7 @@ const runCommand = (operator, value) => {
     case "movie-this":
       searchMovies(value)
       break
-    case "do-what-it-says":
+    case "run-batch-file":
       runTxtFile()
       break
     default:
@@ -30,7 +30,7 @@ const runCommand = (operator, value) => {
       \tconcert-this
       \tspotify-this-song
       \tmovie-this
-      \tdo-what-it-says\n\n`))
+      \trun-batch-file\n\n`))
   }
 }
 
@@ -41,10 +41,10 @@ const logAndSave = (str) => {
   })
 }
 
-// ================= do what it says ===========
-// reads in the 'random.txt' file and executes the commands inside
+// ================= run batch file ===========
+// reads in the 'search.bat' file and executes the commands inside
 const runTxtFile = () => {
-  fs.readFile('./random.txt', 'utf8', (err, data) => {
+  fs.readFile('./search.bat', 'utf8', (err, data) => {
     if (err){
       return console.log(err)
     } 
@@ -105,13 +105,6 @@ const displayArtists = (arr) => {
   }
 }
 
-// searchSpotify();
-// searchSpotify('Killing Me Softly Roberta Flack');
-// searchSpotify('The Prayer Josh Groban');
-// searchSpotify('Peace on Earth/Little Drummer Boy');
-// ========================= END SPOTIFY THIS ======================
-
-
 // ====================== CONCERT THIS ===========================
 // Find and displays the dates and locations of all of the scheduled concerts
 // for the 'artist' provided
@@ -134,13 +127,11 @@ const searchConcerts = (artist) => {
   });
 }
 
-// searchConcerts("Reba McEntire")
-
 // Gets and displays the info about the movie with the title specified.
 // Only displays data for one movie.
 // ===========================  Movie This ===================================
 const searchMovies = (title) => {
-
+  if (title === '') { title = "Mr Nobody"}
   axios.get(`http://www.omdbapi.com/?t=${title}&apikey=trilogy`)
   .then((resp) => {
     // console.log(JSON.stringify(resp.data, null, 2));
