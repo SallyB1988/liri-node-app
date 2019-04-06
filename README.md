@@ -75,3 +75,8 @@ movie-this, Office Space
 concert-this, Reba McEntire
 ```
 
+# Video Showing Working Liri app
+
+[concert-this Demo Video](https://github.com/SallyB1988/liri-node-app/blob/master/concert-this.webm)
+
+
