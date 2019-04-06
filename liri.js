@@ -11,6 +11,7 @@ const value = args.splice(1).join('+');
 
 const runCommand = (operator, value) => {
 
+  console.log('\033[2J');    //clear terminal
   switch (operator) {
     case "concert-this":
       searchConcerts(value)
@@ -33,21 +34,30 @@ const runCommand = (operator, value) => {
   }
 }
 
+const logAndSave = (str) => {
+  console.log(str);
+  fs.appendFile('log.txt', `${str}\r\n`, function(err) {
+    if (err) console.log('ERROR: ' + err)
+  })
+}
+
 // ================= do what it says ===========
-// reads in the 'random.txt' file and executes the command inside
+// reads in the 'random.txt' file and executes the commands inside
 const runTxtFile = () => {
   fs.readFile('./random.txt', 'utf8', (err, data) => {
     if (err){
       return console.log(err)
     } 
     const dataArray = data.split('\r\n')
-    console.log(dataArray);
     dataArray.forEach((d) => {
 
       const elements = d.split(",")
       const operator = elements[0]
-      const value = elements[1].trim().replace(/ /g,'+')
-      runCommand(operator, value)
+      if (operator) {   // this will ignore any blank lines
+
+        const value = elements[1].trim().replace(/ /g,'+')
+          runCommand(operator, value)
+      }
     })
   })
 }
@@ -65,7 +75,9 @@ function searchSpotify(title = "The Sign Ace of Base") {
   if (err) {
     return console.log('Error: ' + err);
   }
-  // console.log(JSON.stringify(data.tracks.items, null, 3)); // This shows the ENTIRE object nicely! The last number is an indentation factor
+  logAndSave(`\n\n`);
+  logAndSave(`Information for ${title.replace(/\+/g,' ').toUpperCase()}`);
+  logAndSave(`====================================`);
   const items = data.tracks.items;
   items.forEach(item => {
     displaySpotifyInfo(item)
@@ -74,18 +86,16 @@ function searchSpotify(title = "The Sign Ace of Base") {
 }
 
 const displaySpotifyInfo = (track) => {
-  // var track = data.items[0];
-  // console.log(track);
-  console.log(`Song: ${track.name}`);
-  console.log("Artist(s): ");
+  logAndSave(`Song: ${track.name}`);
+  logAndSave("Artist(s): ");
   displayArtists(track.artists);
-  console.log(`Spotify preview link: ${track.external_urls.spotify}`);
-  console.log(`Album:  ${track.album.name}`)
+  logAndSave(`Spotify preview link: ${track.external_urls.spotify}`);
+  logAndSave(`Album:  ${track.album.name}`)
 }
 
 const displayArtists = (arr) => {
   for (i=0; i<arr.length; i++) {
-    console.log(`\t ${arr[i].name}`);
+    logAndSave(`\t ${arr[i].name}`);
   }
 }
 
@@ -102,15 +112,15 @@ const displayArtists = (arr) => {
 const searchConcerts = (artist) => {
   axios.get(`https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`)
   .then(function(resp) {
-    console.log(`\n\n`);
-    console.log(`Concerts for ${artist.toUpperCase()}`);
-    console.log(`====================================`);
+    logAndSave(`\n\n`);
+    logAndSave(`Concerts for ${artist.replace('+',' ').toUpperCase()}`);
+    logAndSave(`====================================`);
     resp.data.forEach((event) => {
       var date = moment(event.datetime).format("MM/DD/YY")
-      console.log(`\n\tDate: ${date}`);
+      logAndSave(`\n\tDate: ${date}`);
 
-      console.log(`\t\tVenue: ${event.venue.name}`)
-      console.log(`\t\tLocation: ${event.venue.city}, ${event.venue.region}`)
+      logAndSave(`\t\tVenue: ${event.venue.name}`)
+      logAndSave(`\t\tLocation: ${event.venue.city}, ${event.venue.region}`)
     })
   })
   .catch(function (error) {
@@ -128,9 +138,12 @@ const searchMovies = (title) => {
   axios.get(`http://www.omdbapi.com/?t=${title}&apikey=trilogy`)
   .then((resp) => {
     // console.log(JSON.stringify(resp.data, null, 2));
+    logAndSave(`\n\n`);
+    logAndSave(`Information for ${title.replace(/\+/g,' ').toUpperCase()}`);
+    logAndSave(`====================================`);
     var data = resp.data;
     if (data.Title === undefined) {
-      return console.log("No Movie data found");
+      return logAndSave("No Movie data found");
     } else {
       displayMovieInfo(data)
     }
@@ -140,14 +153,14 @@ const searchMovies = (title) => {
 
 // Display movie information in an organized way
 const displayMovieInfo = (data) => {
-  console.log(`Title:  ${data.Title}`);
-  console.log(`\tYear:  ${data.Year}`);
-  console.log(`\tIMDB Rating: ${data.imdbRating}`)
-  console.log(`\tRotten Tomatoes Rating: ${getRottenTomatoes(data.Ratings)}`)
-  console.log(`\tCountry Where Produced: ${data.Country}`)
-  console.log(`\tLanguage: ${data.Language}`)
-  console.log(`\tPlot: ${data.Plot}`)
-  console.log(`\tActors: ${data.Actors}`)
+  logAndSave(`Title:  ${data.Title}`);
+  logAndSave(`\tYear:  ${data.Year}`);
+  logAndSave(`\tIMDB Rating: ${data.imdbRating}`)
+  logAndSave(`\tRotten Tomatoes Rating: ${getRottenTomatoes(data.Ratings)}`)
+  logAndSave(`\tCountry Where Produced: ${data.Country}`)
+  logAndSave(`\tLanguage: ${data.Language}`)
+  logAndSave(`\tPlot: ${data.Plot}`)
+  logAndSave(`\tActors: ${data.Actors}`)
 }
 const getRottenTomatoes = (ratings) => {
   // let obj = ratings.find((rating) => {
