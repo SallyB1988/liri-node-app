@@ -9,7 +9,6 @@ var args = process.argv.splice(2);
 const operator = args[0];
 const value = args.splice(1).join('+');
 
-console.log(value);
 const runCommand = (operator, value) => {
 
   switch (operator) {
@@ -41,10 +40,15 @@ const runTxtFile = () => {
     if (err){
       return console.log(err)
     } 
-    const elements = data.split(",")
-    const operator = elements[0]
-    const value = elements[1].replace(/ /g,'+')
-    runCommand(operator, value)
+    const dataArray = data.split('\r\n')
+    console.log(dataArray);
+    dataArray.forEach((d) => {
+
+      const elements = d.split(",")
+      const operator = elements[0]
+      const value = elements[1].trim().replace(/ /g,'+')
+      runCommand(operator, value)
+    })
   })
 }
 
@@ -61,7 +65,7 @@ function searchSpotify(title = "The Sign Ace of Base") {
   if (err) {
     return console.log('Error: ' + err);
   }
-  console.log(JSON.stringify(data.tracks.items, null, 3)); // This shows the ENTIRE object nicely! The last number is an indentation factor
+  // console.log(JSON.stringify(data.tracks.items, null, 3)); // This shows the ENTIRE object nicely! The last number is an indentation factor
   const items = data.tracks.items;
   items.forEach(item => {
     displaySpotifyInfo(item)
@@ -93,6 +97,8 @@ const displayArtists = (arr) => {
 
 
 // ====================== CONCERT THIS ===========================
+// Find and displays the dates and locations of all of the scheduled concerts
+// for the 'artist' provided
 const searchConcerts = (artist) => {
   axios.get(`https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`)
   .then(function(resp) {
@@ -114,25 +120,34 @@ const searchConcerts = (artist) => {
 
 // searchConcerts("Reba McEntire")
 
-//======================= End of Concert-this ======================================
-
+// Gets and displays the info about the movie with the title specified.
+// Only displays data for one movie.
 // ===========================  Movie This ===================================
 const searchMovies = (title) => {
 
   axios.get(`http://www.omdbapi.com/?t=${title}&apikey=trilogy`)
   .then((resp) => {
+    // console.log(JSON.stringify(resp.data, null, 2));
     var data = resp.data;
-    console.log(`Title:  ${data.Title}`);
-    console.log(`Year:  ${data.Year}`);
-    console.log(`IMDB Rating: ${data.imdbRating}`)
-    console.log(`Rotten Tomatoes Rating: ${getRottenTomatoes(data.Ratings)}`)
-    console.log(`Country Where Produced: ${data.Country}`)
-    console.log(`Language: ${data.Language}`)
-    console.log(`Plot: ${data.Plot}`)
-    console.log(`Actors: ${data.Actors}`)
-    // console.log(data)
+    if (data.Title === undefined) {
+      return console.log("No Movie data found");
+    } else {
+      displayMovieInfo(data)
+    }
   })
   
+}
+
+// Display movie information in an organized way
+const displayMovieInfo = (data) => {
+  console.log(`Title:  ${data.Title}`);
+  console.log(`\tYear:  ${data.Year}`);
+  console.log(`\tIMDB Rating: ${data.imdbRating}`)
+  console.log(`\tRotten Tomatoes Rating: ${getRottenTomatoes(data.Ratings)}`)
+  console.log(`\tCountry Where Produced: ${data.Country}`)
+  console.log(`\tLanguage: ${data.Language}`)
+  console.log(`\tPlot: ${data.Plot}`)
+  console.log(`\tActors: ${data.Actors}`)
 }
 const getRottenTomatoes = (ratings) => {
   // let obj = ratings.find((rating) => {
