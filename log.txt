@@ -376,3 +376,98 @@ Album:  Hit Me With Your Best Shot
 
 Album:  Ultimate Collection
 
+Concerts for REBA MCENTIRE
+		Venue: Harrah's Hoosier Park Outdoor Music Center
+
+
+
+
+	Date: 06/26/19
+		Location: Anderson, IN
+
+====================================
+		Venue: Reba, Brooks & Dunn: Together In Vegas
+
+	Date: 06/28/19
+		Venue: Reba, Brooks & Dunn: Together In Vegas
+
+	Date: 06/15/19
+		Location: Las Vegas, NV
+
+
+	Date: 06/29/19
+		Venue: Reba, Brooks & Dunn: Together In Vegas
+		Location: Las Vegas, NV
+
+
+	Date: 07/03/19
+		Venue: Reba, Brooks & Dunn: Together In Vegas
+		Location: Las Vegas, NV
+
+		Location: Las Vegas, NV
+
+
+	Date: 07/05/19
+		Venue: Reba, Brooks & Dunn: Together In Vegas
+		Location: Las Vegas, NV
+
+
+	Date: 07/06/19
+		Venue: Reba, Brooks & Dunn: Together In Vegas
+		Location: Las Vegas, NV
+
+
+	Date: 07/13/19
+		Venue: FireKeepers Casino Hotel
+		Location: Battle Creek, MI
+
+
+	Date: 07/19/19
+		Venue: Turning Stone Resort Casino
+
+	Date: 07/20/19
+		Venue: Delaware State Fair
+		Location: Verona, NY
+
+		Location: Harrington, DE
+
+
+	Date: 07/26/19
+		Venue: Foxwoods Casino
+		Location: Mashantucket, CT
+
+
+	Date: 07/27/19
+		Venue: Foxwoods Casino
+		Location: Mashantucket, CT
+
+
+	Date: 07/28/19
+		Venue: Wolf Trap
+		Location: Vienna, VA
+
+
+	Date: 08/17/19
+		Venue: Treasure Island Amphitheater
+		Location: Welch, MN
+
+
+	Date: 08/18/19
+		Venue: Illinois State Fairgrounds Il State Fair
+		Location: Springfield, IL
+
+
+	Date: 08/31/19
+		Venue: Ovation Hall at Ocean Resort Casino
+		Location: Atlantic City, NJ
+
+
+	Date: 09/01/19
+		Venue: Koussevitzky Music Shed
+		Location: Lenox, MA
+
+
+	Date: 10/26/19
+		Venue: Xcite Center
+		Location: Bensalem, PA
+
